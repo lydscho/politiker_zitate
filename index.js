@@ -35,20 +35,30 @@ var handlers = {
              
         this.emit(':ask', 'Wie kann ich helfen?', 'Sag einfach...') //This will output "Wie kann ich helfen?" and wait for user input. If the user doesn't reply within a couple of seconds, it will re-promt.
         // = equivalent
-        this.response.speak('Wie kann ich helfen?').listen('Sag einfach gib mir ein zitat.')
+        this.response.speak('Wie kann ich helfen?').listen('Sag einfach gib mir ein Politiker Zitat.')
 		this.emit(':responseReady')	      
     },
     
     'AMAZON.HelpIntent': function () {
-        //This is triggered when users say "Help"        
+        //This is triggered when users say "Help"  
+        
+        speechOutput = 'Sag einfach Gib mir ein Politiker Zitat.';
+        reprompt = 'Oder sage Wiederhole das Zitat.';
+        this.emit(':ask', speechOutput, reprompt);      
     },
     
     'AMAZON.CancelIntent': function () {
-        //This is triggered when users say "Cancel"      
+        //This is triggered when users say "Cancel"  
+        
+        speechOutput = 'Der Skill wird abgebrochen';
+        this.emit(':tell', speechOutput);    
     },
     
     'AMAZON.StopIntent': function () {
         //This is triggered when users say "Stop"
+        
+        speechOutput = 'Bis bald.';
+        this.emit(':tell', speechOutput);
     },
     
 };
