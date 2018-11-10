@@ -36,7 +36,13 @@ var handlers = {
         // = equivalent
         //this.response.speak('Wie kann ich helfen?').listen('Sag einfach gib mir ein Politiker Zitat.')
 		//this.emit(':responseReady')
-		      
+		
+		
+		speechOutput = 'Hier ist ein Zitat von';
+		this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
+		// = equivalent
+		this.response.speak('Hier ist ein Zitat von').listen('Soll ich das Zitat wiederholen?')
+		this.emit(':responseReady')			
     },
     
     'AMAZON.HelpIntent': function () {
