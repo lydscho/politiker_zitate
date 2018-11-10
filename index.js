@@ -6,7 +6,8 @@ var welcomeOutput = "Willkommen. Wie kann ich helfen?";
 var welcomeReprompt = "Sag einfach Gib mir ein Politiker Zitat.";
 
 var SKILL_NAME = 'politiker zitate';
-var GET_QUOTE_MESSAGE = 'Hier ist ein Zitat von   ';
+var GET_QUOTE_MESSAGE = 'Hier ist ein Zitat von ';
+
 
 const data = [
     'Horst Seehofer: ',
@@ -63,12 +64,25 @@ var handlers = {
         const factIndex = Math.floor(Math.random() * factArr.length);
         const randomFact = factArr[factIndex];
         const speechOutput = GET_QUOTE_MESSAGE + randomFact;
+        
+        this.attributes.lastSpeech = randomFact; //adding the last fact to the session attributes, so we can use it to repeat it if requested by the user. 
+        this.response.cardRenderer(SKILL_NAME, randomFact); 
+        this.response.speak(speechOutput + "Willst du noch ein Zitat hören?").listen("Willst du noch ein Zitat hören?"); 
+        this.emit(':responseReady'); 
+    
 
-        this.response.cardRenderer(SKILL_NAME, randomFact);
-        this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
+        //this.response.cardRenderer(SKILL_NAME, randomFact);
+        //this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
         // = equivaltent
-        this.response.speak(speechOutput).listen('Soll ich das Zitat wiederholen?');
-        this.emit(':responseReady');			
+        //this.response.speak(speechOutput).listen('Soll ich das Zitat wiederholen?');
+        //this.emit(':responseReady');			
+    },
+    
+    'AMAZON.RepeatIntent': function () {
+        //This is triggered when users say "Repeat"
+        
+        speechOutput = 'OK, ich wiederhole das Zitat.';
+        this.emit(':ask', speechOutput);
     },
     
     'AMAZON.HelpIntent': function () {
