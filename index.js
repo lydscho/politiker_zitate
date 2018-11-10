@@ -5,6 +5,20 @@ var reprompt;
 var welcomeOutput = "Willkommen. Wie kann ich helfen?";
 var welcomeReprompt = "Sag einfach Gib mir ein Politiker Zitat.";
 
+var SKILL_NAME = 'politiker zitate';
+var GET_QUOTE_MESSAGE = 'Hier ist ein Zitat von   ';
+
+const data = [
+    'Horst Seehofer: ',
+    'Wolfgang Schäuble: ',
+    'Angela Merkel: ',
+    'Alexander Gauland: ',
+    'Andreas Scheuer: ',
+    'Christian Lindner: ',
+    'Helmut Schmidt: ',
+    'Wolfgang Schäuble: ',
+];
+
 
 // 2. Skill Code
 
@@ -38,11 +52,23 @@ var handlers = {
 		//this.emit(':responseReady')
 		
 		
-		speechOutput = 'Hier ist ein Zitat von';
-		this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
+		//speechOutput = 'Hier ist ein Zitat von';
+		//this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
 		// = equivalent
-		this.response.speak('Hier ist ein Zitat von').listen('Soll ich das Zitat wiederholen?')
-		this.emit(':responseReady')			
+		//this.response.speak('Hier ist ein Zitat von').listen('Soll ich das Zitat wiederholen?')
+		//this.emit(':responseReady')
+		
+		
+		const factArr = data;
+        const factIndex = Math.floor(Math.random() * factArr.length);
+        const randomFact = factArr[factIndex];
+        const speechOutput = GET_QUOTE_MESSAGE + randomFact;
+
+        this.response.cardRenderer(SKILL_NAME, randomFact);
+        this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
+        // = equivaltent
+        this.response.speak(speechOutput).listen('Soll ich das Zitat wiederholen?');
+        this.emit(':responseReady');			
     },
     
     'AMAZON.HelpIntent': function () {
