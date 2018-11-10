@@ -3,7 +3,7 @@
 var speechOutput;
 var reprompt;
 var welcomeOutput = "Willkommen. Wie kann ich helfen?";
-var welcomeReprompt =  = "Sag einfach Gib mir ein Politiker Zitat.";
+var welcomeReprompt = "Sag einfach Gib mir ein Politiker Zitat.";
 
 
 // 2. Skill Code
@@ -12,7 +12,7 @@ var welcomeReprompt =  = "Sag einfach Gib mir ein Politiker Zitat.";
 var Alexa = require('alexa-sdk'); // Alexa Skills Kit SDK for NodeJS
 
 var APP_ID = 'amzn1.ask.skill.4802d143-7974-4aa1-853c-51ae9d3b1515';
-var speechOutput = '';
+//var speechOutput = ''; // is already defined
 
 var handlers = {
     'LaunchRequest': function () {
@@ -26,17 +26,17 @@ var handlers = {
     'GetNewQuoteIntent': function () {
         //This is triggered when users say "Alexa, gib mir ein Zitat"
         
-        this.emit(':tellWithCard', 'Hello') //This will output "Hello" and close the session.
+        //this.emit(':tellWithCard', 'Hello') //This will output "Hello" and close the session.
         // = equivalent 
-        this.response.speak(speechOutput).cardRenderer('Title', 'Body text') 
-        this.emit(':responseReady')	
-            
-                
+        //this.response.speak(speechOutput).cardRenderer('Title', 'Body text') 
+        //this.emit(':responseReady')	            
+           
              
-        this.emit(':ask', 'Wie kann ich helfen?', 'Sag einfach...') //This will output "Wie kann ich helfen?" and wait for user input. If the user doesn't reply within a couple of seconds, it will re-promt.
+        //this.emit(':ask', 'Wie kann ich helfen?', 'Sag einfach...') //This will output "Wie kann ich helfen?" and wait for user input. If the user doesn't reply within a couple of seconds, it will re-prompt.
         // = equivalent
-        this.response.speak('Wie kann ich helfen?').listen('Sag einfach gib mir ein Politiker Zitat.')
-		this.emit(':responseReady')	      
+        //this.response.speak('Wie kann ich helfen?').listen('Sag einfach gib mir ein Politiker Zitat.')
+		//this.emit(':responseReady')
+		      
     },
     
     'AMAZON.HelpIntent': function () {
