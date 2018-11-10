@@ -1,20 +1,30 @@
+// 1. Text strings
 
+var speechOutput;
+var reprompt;
+var welcomeOutput = "Willkommen. Wie kann ich helfen?";
+var welcomeReprompt =  = "Sag einfach Gib mir ein Politiker Zitat.";
+
+
+// 2. Skill Code
 
 'use strict';
-const Alexa = require('alexa-sdk'); // Alexa Skills Kit SDK for NodeJS
+var Alexa = require('alexa-sdk'); // Alexa Skills Kit SDK for NodeJS
 
-const APP_ID = 'amzn1.ask.skill.4802d143-7974-4aa1-853c-51ae9d3b1515';
+var APP_ID = 'amzn1.ask.skill.4802d143-7974-4aa1-853c-51ae9d3b1515';
+var speechOutput = '';
 
-
-const handlers = {
+var handlers = {
     'LaunchRequest': function () {
-        //This is triggered when users say "Alexa, öffne politiker zitate."
+        //This is triggered when users says "Alexa, öffne Politiker Zitate."
         
-        this.emit(':ask', 'Willkommen. Wie kann ich helfen?')
+        //this.emit(':ask', 'Willkommen. Wie kann ich helfen?')
+        
+        this.emit(':ask', welcomeOutput, welcomeReprompt);        
     },
     
     'GetNewQuoteIntent': function () {
-        //This is triggered when users say "Alexa, gib mir ein zitat"
+        //This is triggered when users say "Alexa, gib mir ein Zitat"
         
         this.emit(':tellWithCard', 'Hello') //This will output "Hello" and close the session.
         // = equivalent 
