@@ -2,22 +2,27 @@
 
 var speechOutput;
 var reprompt;
-var welcomeOutput = "Willkommen. Wie kann ich helfen?";
-var welcomeReprompt = "Sag einfach Gib mir ein Politiker Zitat.";
+var welcomeOutput = 'Willkommen. Willst du ein Politiker Zitat hören?';
+var welcomeReprompt = 'Sag einfach Gib mir ein Politiker Zitat.';
 
 var SKILL_NAME = 'politiker zitate';
-var GET_QUOTE_MESSAGE = 'Hier ist ein Zitat von ';
+var GET_QUOTE_MESSAGE = 'Hier ist ein Zitat von   ';
+//var GET_ANOTHER_MESSAGE = "Hier ist noch ein Zitat. Dieses ist von   ";
+//var REPEAT_MESSAGE = "Ich wiederhole das Zitat";
+//var HELP_MESSAGE = 'Sag einfach Gib mir ein Politiker Zitat, oder sage abbrechen, um den Skill zu beenden... Was möchstest du tun?';
+//var HELP_REPROMPT = 'Wie kann ich dir helfen?';
+var STOP_MESSAGE = 'Bis bald!';
 
 
 const data = [
-    'Horst Seehofer: ',
-    'Wolfgang Schäuble: ',
-    'Angela Merkel: ',
-    'Alexander Gauland: ',
-    'Andreas Scheuer: ',
-    'Christian Lindner: ',
-    'Helmut Schmidt: ',
-    'Wolfgang Schäuble: ',
+    'Horst Seehofer. bla bla. ',
+    'Wolfgang Schäuble. bla bla. ',
+    'Angela Merkel. bla bla. ',
+    'Alexander Gauland. bla bla. ',
+    'Andreas Scheuer. bla bla. ',
+    'Christian Lindner. bla bla. ',
+    'Helmut Schmidt. bla bla. ',
+    'Wolfgang Schäuble. bla bla. ',
 ];
 
 
@@ -27,27 +32,27 @@ const data = [
 var Alexa = require('alexa-sdk'); // Alexa Skills Kit SDK for NodeJS
 
 var APP_ID = 'amzn1.ask.skill.4802d143-7974-4aa1-853c-51ae9d3b1515';
-//var speechOutput = ''; // is already defined
+//var speechOutput = '';
 
 var handlers = {
     'LaunchRequest': function () {
-        //This is triggered when users says "Alexa, öffne Politiker Zitate."
+        //This is triggered when users say "Alexa, öffne Politiker Zitate."
         
         //this.emit(':ask', 'Willkommen. Wie kann ich helfen?')
         
-        this.emit(':ask', welcomeOutput, welcomeReprompt);        
+        this.emit(':ask', welcomeOutput, welcomeReprompt);
     },
     
     'GetNewQuoteIntent': function () {
         //This is triggered when users say "Alexa, gib mir ein Zitat"
         
-        //this.emit(':tellWithCard', 'Hello') //This will output "Hello" and close the session.
+        //this.emit(':tellWithCard', 'Hello'); //This will output "Hello" and close the session.
         // = equivalent 
         //this.response.speak(speechOutput).cardRenderer('Title', 'Body text') 
         //this.emit(':responseReady')	            
            
              
-        //this.emit(':ask', 'Wie kann ich helfen?', 'Sag einfach...') //This will output "Wie kann ich helfen?" and wait for user input. If the user doesn't reply within a couple of seconds, it will re-prompt.
+        //this.emit(':ask', 'Wie kann ich helfen?', 'Sag einfach...'); //This will output "Wie kann ich helfen?" and wait for user input. If the user doesn't reply within a couple of seconds, it will re-prompt.
         // = equivalent
         //this.response.speak('Wie kann ich helfen?').listen('Sag einfach gib mir ein Politiker Zitat.')
 		//this.emit(':responseReady')
@@ -56,7 +61,7 @@ var handlers = {
 		//speechOutput = 'Hier ist ein Zitat von';
 		//this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
 		// = equivalent
-		//this.response.speak('Hier ist ein Zitat von').listen('Soll ich das Zitat wiederholen?')
+		//this.response.speak('Hier ist ein Zitat von').listen('Soll ich das Zitat wiederholen?');
 		//this.emit(':responseReady')
 		
 		
@@ -75,15 +80,28 @@ var handlers = {
         //this.emit(':ask', speechOutput, 'Soll ich das Zitat wiederholen?');
         // = equivaltent
         //this.response.speak(speechOutput).listen('Soll ich das Zitat wiederholen?');
-        //this.emit(':responseReady');			
+        //this.emit(':responseReady');
     },
     
-    'AMAZON.RepeatIntent': function () {
+     'AMAZON.RepeatIntent': function () { 
         //This is triggered when users say "Repeat"
-        
-        speechOutput = 'OK, ich wiederhole das Zitat.';
-        this.emit(':ask', speechOutput);
-    },
+         
+        //speechOutput = 'OK, ich wiederhole das Zitat.';
+        //this.emit(':ask', speechOutput);
+    
+         
+        this.response.speak(this.attributes.lastSpeech + "Willst du noch ein Zitat hören?").listen("Willst du noch ein Zitat hören?"); 
+        this.emit(':responseReady'); 
+     },
+    
+    'AMAZON.YesIntent': function () { 
+        this.emit("GetNewQuoteIntent"); 
+    }, 
+    
+    'AMAZON.NoIntent': function () { 
+        this.response.speak(STOP_MESSAGE); 
+        this.emit(':responseReady'); 
+    }, 
     
     'AMAZON.HelpIntent': function () {
         //This is triggered when users say "Help"  
